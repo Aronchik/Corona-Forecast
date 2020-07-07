@@ -416,27 +416,22 @@ public class PopulationInfoFormDisplay extends JFrame {
 					
 					if(((String)graphChoiceComboBox.getSelectedItem()).equals("Infected")) {						
 						InfectedGraph infected =  new InfectedGraph(DPController);
-						setVisible(false);
 						infected.createAndShowGui();
 					}
 					else if(((String)graphChoiceComboBox.getSelectedItem()).equals("ICU")) {
 						ICUGraph icu = new ICUGraph(DPController);
-						setVisible(false);
 						icu.createAndShowGui();
 					}
 					else if(((String)graphChoiceComboBox.getSelectedItem()).equals("Deceased")) {
 						DeceasedGraph deceased = new DeceasedGraph(DPController);
-						setVisible(false);
 						deceased.createAndShowGui();
 					}
 					else if(((String)graphChoiceComboBox.getSelectedItem()).equals("Recovered")) {
 						RecoveredGraph recovered = new RecoveredGraph(DPController);
-						setVisible(false);
 						recovered.createAndShowGui();
 					}
 					else if(((String)graphChoiceComboBox.getSelectedItem()).equals("Infection Rate")) {
 						InfectionRateGraph infectionRate = new InfectionRateGraph(DPController);
-						setVisible(false);
 						infectionRate.createAndShowGui();
 					}
 				}
@@ -453,6 +448,21 @@ public class PopulationInfoFormDisplay extends JFrame {
 		separator_1.setBounds(10, 318, 564, 2);
 		contentPane.add(separator_1);
 		btnFinish.setVisible(false);
+		
+		daysPanel = new JPanel();
+		layeredPane.add(daysPanel, "name_355130227423197");
+		daysPanel.setLayout(null);
+		
+		JLabel lblDays = new JLabel("<html><center>How many days do you want to Forecast? (3-180)</center></html>");
+		lblDays.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDays.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+		lblDays.setBounds(110, 39, 329, 60);
+		daysPanel.add(lblDays);
+		
+		daysField = new JTextField();
+		daysField.setColumns(10);
+		daysField.setBounds(228, 138, 86, 20);
+		daysPanel.add(daysField);
 		
 		graphChoicePanel = new JPanel();
 		layeredPane.add(graphChoicePanel, "name_265237055905723");
@@ -474,21 +484,6 @@ public class PopulationInfoFormDisplay extends JFrame {
 		graphChoiceComboBox.addItem("Recovered");
 		graphChoiceComboBox.addItem("Infection Rate");
 		
-		daysPanel = new JPanel();
-		layeredPane.add(daysPanel, "name_355130227423197");
-		daysPanel.setLayout(null);
-		
-		JLabel lblDays = new JLabel("<html><center>How many days do you want to Forecast? (3-180)</center></html>");
-		lblDays.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDays.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
-		lblDays.setBounds(110, 39, 329, 60);
-		daysPanel.add(lblDays);
-		
-		daysField = new JTextField();
-		daysField.setColumns(10);
-		daysField.setBounds(228, 138, 86, 20);
-		daysPanel.add(daysField);
-		
 		//List of panels added to the array list that contains them
 		panelList.add(isolationPanel);
 		panelList.add(contactTracingPanel);
@@ -498,8 +493,8 @@ public class PopulationInfoFormDisplay extends JFrame {
 		panelList.add(travelRestrictionsPanel);
 		panelList.add(currentNumberOfInfectedPanel);
 		panelList.add(testingPerDayPanel);
-		panelList.add(graphChoicePanel);
 		panelList.add(daysPanel);
+		panelList.add(graphChoicePanel);
 		graphChoicePanel.setLayout(null);
 		
 		JButton btnHelpAnalyst = new JButton("Help");
