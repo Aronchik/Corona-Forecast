@@ -51,21 +51,23 @@ class AlgorithmWorstCaseTest {
     	DataPointProcessor processor = new DataPointProcessor(form,virusInfo, 100);
     	
 		List<DataPoint> infectionRateDP = processor.processInfectionRateDP();
-		List<DataPoint> infectedDP = processor.processInfectedDP();
-		List<DataPoint> ICUDP = processor.processICUDP();
-		List<DataPoint> deceasedDP = processor.processDeceasedDP();
-		List<DataPoint> recoveredDP = processor.processRecoveredDP();
-		
 		assertEquals(0,getMinY(infectionRateDP));
-		assertEquals(2,getMinY(infectedDP));
-		assertEquals(0,getMinY(ICUDP));
-		assertEquals(0,getMinY(deceasedDP));
-		assertEquals(0,getMinY(recoveredDP));
-		
 		assertEquals(11,getMaxY(infectionRateDP));
+		
+		List<DataPoint> infectedDP = processor.processInfectedDP();
+		assertEquals(2,getMinY(infectedDP));
 		assertEquals(254128,getMaxY(infectedDP));
+		
+		List<DataPoint> ICUDP = processor.processICUDP();
+		assertEquals(0,getMinY(ICUDP));
 		assertEquals(12756,getMaxY(ICUDP));
+		
+		List<DataPoint> deceasedDP = processor.processDeceasedDP();
+		assertEquals(0,getMinY(deceasedDP));
 		assertEquals(26001,getMaxY(deceasedDP));
+		
+		List<DataPoint> recoveredDP = processor.processRecoveredDP();
+		assertEquals(0,getMinY(recoveredDP));
 		assertEquals(417578,getMaxY(recoveredDP));
 	}
 
