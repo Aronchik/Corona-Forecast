@@ -4,6 +4,8 @@ import com.Corona.Forecast.Controller.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class ForecastAlgorithm {
 	
 	//Attributes
@@ -31,6 +33,8 @@ public class ForecastAlgorithm {
 		this.infoForm = informationForm;
 		this.basicReproductiveNumber = virusInformation.getBasicReproductiveNumber();
 		
+		if(virusInformation.getVaccineAvailability())
+			JOptionPane.showMessageDialog(null, "Please note that a vaccine is available", "Vaccine", JOptionPane.INFORMATION_MESSAGE);
 		
 		if(days >= 3 && days <= 180)
 			this.days = days;
@@ -102,7 +106,7 @@ public class ForecastAlgorithm {
 	private void calculateEffectiveReproductiveNumber() {
 		calculateProbabilityOfInfection();
 		calculateAverageNumberOfExposures();
-		effectiveReproductiveNumber = 3.8*avgNoOfExposures*probabilityOfInfection;
+		effectiveReproductiveNumber = virusInformation.getBasicReproductiveNumber()*avgNoOfExposures*probabilityOfInfection;
 	}
 	
 	private List<DataPoint> ISRModelAlgorithm(GraphType typeOfGraph)
@@ -168,7 +172,7 @@ public class ForecastAlgorithm {
     		
         	
         	//Some amount begin recover from the virus after about 20 days
-        	if(i > 20)
+        	if(i > virusInformation.getIllnessDuration())
         	{
         		//Out of the infected about 5% will need hospitalization in the ICU
         		newICU = infected.y*0.05;
