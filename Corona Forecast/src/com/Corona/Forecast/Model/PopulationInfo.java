@@ -47,19 +47,34 @@ public class PopulationInfo {
 		return currentNumberofInfected;
 	}
 	public void setCurrentNumberofInfected(int currentNumberofInfected) {
-		this.currentNumberofInfected = currentNumberofInfected;
+		if(0 <= currentNumberofInfected && currentNumberofInfected <= getPopulationNumber())
+			this.currentNumberofInfected = currentNumberofInfected;
+		else if(currentNumberofInfected < 0)
+			this.currentNumberofInfected = 0;
+		else if(currentNumberofInfected > getPopulationNumber())
+			this.currentNumberofInfected = getPopulationNumber();
 	}
 	public int getTestingPerDay() {
 		return testingPerDay;
 	}
 	public void setTestingPerDay(int testingPerDay) {
-		this.testingPerDay = testingPerDay;
+		if(0 <= testingPerDay && testingPerDay <= getPopulationNumber())
+			this.testingPerDay = testingPerDay;
+		else if(testingPerDay < 0)
+			this.testingPerDay = 0;
+		else if(testingPerDay > getPopulationNumber())
+			this.testingPerDay = getPopulationNumber();
 	}
 	public int getPopulationNumber() {
 		return populationNumber;
 	}
 	public void setPopulationNumber(int populationNumber) {
-		this.populationNumber = populationNumber;
+		if(1 <= populationNumber && populationNumber <= 2000000000)
+			this.populationNumber = populationNumber;
+		else if(populationNumber < 1)
+			this.populationNumber = 1;
+		else if(populationNumber > 2000000000)
+			this.populationNumber = 2000000000;
 	}
 
 }
