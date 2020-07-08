@@ -137,7 +137,6 @@ public class VirusInfoUpdate extends JFrame {
 					JOptionPane.showMessageDialog(null, "Virus Info Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
 					setVisible(false);
 				}
-				
 			}
 		});
 		btnSubmit.setBounds(319, 227, 89, 23);
