@@ -126,13 +126,16 @@ public class VirusInfoUpdate extends JFrame {
 						illnessDurationField.getText().equals("") ||
 						(rdbtnVaccineAvailable.isSelected() == false && 
 						rdbtnVaccineNotAvailable.isSelected() == false)
-						) {}
+						) {
+					JOptionPane.showMessageDialog(null, "Please fill out the whole form","Error",JOptionPane.ERROR_MESSAGE);
+					}
 				else
 				{
-					virusInfoController.updateBasicReproductiveNumber(Double.parseDouble(basicReproductiveNumberFIeld.getText()));
-					virusInfoController.updateVaccineInfo(rdbtnVaccineAvailable.isSelected());
-					virusInfoController.updateIllnessDuration(Integer.parseInt(illnessDurationField.getText()));
+					virusInfoController.updateVirusInformation(Double.parseDouble(basicReproductiveNumberFIeld.getText()),
+							rdbtnVaccineAvailable.isSelected(), 
+							Integer.parseInt(illnessDurationField.getText()));
 					JOptionPane.showMessageDialog(null, "Virus Info Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+					setVisible(false);
 				}
 				
 			}
