@@ -32,7 +32,7 @@ public class PopulationInfoFormDisplay extends JFrame {
 	private JButton btnNext;
 	private JButton btnPrevious;
 	private JLabel lblInfoForm;
-	private JButton btnFinish;
+	private JButton btnRun;
 	private JRadioButton rdbtnIsolation;
 	private JRadioButton rdbtnNoIsolation;
 	private JSeparator separator;
@@ -342,10 +342,10 @@ public class PopulationInfoFormDisplay extends JFrame {
 					separator_1.setVisible(false);
 					layeredPane.remove((panelList.get(panelNumber-1)));
 					lblInfoForm.setText("<html><center>Form Complete</center>"
-							+ "Please click \"Finish\" to display the graph"
+							+ "Please click \"Run\" to display the graph"
 							+ "<center>Or click \"Back\" to modify the form</html>");
 					btnNext.setVisible(false);
-					btnFinish.setVisible(true);
+					btnRun.setVisible(true);
 				}
 			}
 		});
@@ -361,7 +361,7 @@ public class PopulationInfoFormDisplay extends JFrame {
 					separator.setVisible(true);
 					separator_1.setVisible(true);
 					lblInfoForm.setText("<html>Please fill out the following information:</html>");
-					btnFinish.setVisible(false);
+					btnRun.setVisible(false);
 					btnNext.setVisible(true);
 				}
 				
@@ -382,10 +382,10 @@ public class PopulationInfoFormDisplay extends JFrame {
 		btnPrevious.setBounds(48, 327, 89, 23);
 		contentPane.add(btnPrevious);
 		
-		btnFinish = new JButton("Finish");
-		btnFinish.addActionListener(new ActionListener() {
+		btnRun = new JButton("Run");
+		btnRun.addActionListener(new ActionListener() {
 			
-			//When Finish button is clicked form is checked for validity before invoking the controller to process
+			//When Run button is clicked form is checked for validity before invoking the controller to process
 			//the data entered
 			public void actionPerformed(ActionEvent e) {
 				if(
@@ -437,8 +437,8 @@ public class PopulationInfoFormDisplay extends JFrame {
 				}
 			}
 		});
-		btnFinish.setBounds(246, 327, 89, 23);
-		contentPane.add(btnFinish);
+		btnRun.setBounds(246, 327, 89, 23);
+		contentPane.add(btnRun);
 		
 		separator = new JSeparator();
 		separator.setBounds(10, 83, 564, 2);
@@ -447,7 +447,7 @@ public class PopulationInfoFormDisplay extends JFrame {
 		separator_1 = new JSeparator();
 		separator_1.setBounds(10, 318, 564, 2);
 		contentPane.add(separator_1);
-		btnFinish.setVisible(false);
+		btnRun.setVisible(false);
 		
 		daysPanel = new JPanel();
 		layeredPane.add(daysPanel, "name_355130227423197");
@@ -463,7 +463,7 @@ public class PopulationInfoFormDisplay extends JFrame {
 		daysField.setColumns(10);
 		daysField.setBounds(228, 138, 86, 20);
 		daysPanel.add(daysField);
-		
+
 		graphChoicePanel = new JPanel();
 		layeredPane.add(graphChoicePanel, "name_265237055905723");
 		
