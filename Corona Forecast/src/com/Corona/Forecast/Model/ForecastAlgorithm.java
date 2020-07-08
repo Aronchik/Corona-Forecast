@@ -192,7 +192,7 @@ public class ForecastAlgorithm {
         	}
 
   
-        	//Infection Rate graph calculating what percentage of the tests are likely to be positive
+        	//Infection Rate graph calculating what percentage of the total tests are likely to be positive
         	infectionRate.y = (700.0*infectious/totalPopulation);
         	
         	infectionRateDP.add(new DataPoint(infectionRate));
