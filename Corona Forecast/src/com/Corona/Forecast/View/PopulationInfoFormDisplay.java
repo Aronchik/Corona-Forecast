@@ -411,8 +411,16 @@ public class PopulationInfoFormDisplay extends JFrame {
 					populationInfoController.setCurrentlyInfected(Integer.parseInt(currentInfectedField.getText()));
 					populationInfoController.setTestsPerDay(Integer.parseInt(testsPerDayField.getText()));
 					
+					int days = Integer.parseInt(daysField.getText());
+					
+					if(0 <= days && days <= 180) {}
+					else if(days < 0)
+						days = 0;
+					else if(days > 180)
+						days = 180;
+					
 					VirusInfoUpdateProcessor virus = new VirusInfoUpdateProcessor();
-					DataPointProcessor DPController = new DataPointProcessor(populationInfoController,virus,Integer.parseInt(daysField.getText()));
+					DataPointProcessor DPController = new DataPointProcessor(populationInfoController,virus,days);
 					
 					if(((String)graphChoiceComboBox.getSelectedItem()).equals("Infected")) {						
 						InfectedGraph infected =  new InfectedGraph(DPController);
