@@ -12,8 +12,9 @@ public class ForecastAlgorithm {
 	private double effectiveReproductiveNumber; //Calculated
 	private double avgNoOfExposures; //E or B
 	private double probabilityOfInfection; //P (0<P<1)
-	private double recoveryPercentagePerDay; //in percent
+	private double recoveryPercentage; //in percent
 	private PopulationInfo infoForm = new PopulationInfo();
+	private double normalizationFactor = 0.244;
 	private VirusInfo virusInformation = VirusInfo.getVirusInfoInstance();
 	private enum GraphType{
 		INFECTION_RATE,INFECTED,ICU,DECEASED,RECOVERED
@@ -23,7 +24,7 @@ public class ForecastAlgorithm {
 	private int totalPopulation; //Total Population
 	private int susceptible; //Starts with total population number minus infected
 	private int infectious; //Starts with initial number of cases
-	private int recovered; //Starts with 0
+	private int removed; //Starts with 0
 	
 	//Class Constructor must receive the population info and also the epidemiologist info
 	public ForecastAlgorithm(PopulationInfo informationForm, VirusInfo virusInformation, int days) {
@@ -38,16 +39,22 @@ public class ForecastAlgorithm {
 		else
 			this.days = 180;
 		
+		resetValues();
+	}
+	
+	private void resetValues()
+	{
+		
 		//Initializing Algorithm values from the population form
 		totalPopulation = infoForm.getPopulationNumber();
 		infectious = infoForm.getCurrentNumberofInfected();
 		susceptible = infoForm.getPopulationNumber() - infectious;
-		recovered = 0;
+		removed = 1;
 		
 		//Default values according to statistics
-		avgNoOfExposures = 15;
+		avgNoOfExposures = 12;
 		probabilityOfInfection = 0.2; 
-		recoveryPercentagePerDay = 0.8;
+		recoveryPercentage = 0.2;
 	}
 	
 	//R (effectiveReproductiveNumber) needs to be calculated for each i (day that passes)
@@ -64,30 +71,30 @@ public class ForecastAlgorithm {
 	//Calculated according to effective reproductive number
 	private void calculateProbabilityOfInfection() {
 		
-		//Proper Hygiene among the population lowers the spread by 15%
+		//Proper Hygiene among the population lowers the spread by 40%
 		if(infoForm.isHygieneInformationCampaign())
-			probabilityOfInfection*=0.85;
+			probabilityOfInfection*=0.60;
 	}
 	
 
 	//Goes down when people stop gathering
 	private void calculateAverageNumberOfExposures() {
 		
-		//Isolation has 15% effectiveness against the spread
+		//Isolation has 50% effectiveness against the spread
 		if(infoForm.isIsolation())
-			avgNoOfExposures*=0.85;
+			avgNoOfExposures*=0.5;
 		
-		//Contact tracing has 10% effectiveness against the spread
+		//Contact tracing has 30% effectiveness against the spread
 		if(infoForm.isContactTracing())
-			avgNoOfExposures*=0.9;
+			avgNoOfExposures*=0.7;
 		
-		//Travel restrictions have 10% effectiveness against the spread
+		//Travel restrictions have 20% effectiveness against the spread
 		if(infoForm.isTravelRestrictions())
-			avgNoOfExposures*=0.9;
+			avgNoOfExposures*=0.8;
 		
-		//Central location Shutdown has 15% effectiveness against the spread
+		//Central location Shutdown has 30% effectiveness against the spread
 		if(infoForm.isCentralLocationShudtown())
-			avgNoOfExposures*=0.85;
+			avgNoOfExposures*=0.7;
 	}
 	
 	//Depends on probability of infection
@@ -95,7 +102,7 @@ public class ForecastAlgorithm {
 	private void calculateEffectiveReproductiveNumber() {
 		calculateProbabilityOfInfection();
 		calculateAverageNumberOfExposures();
-		effectiveReproductiveNumber = avgNoOfExposures*probabilityOfInfection;
+		effectiveReproductiveNumber = 3.8*avgNoOfExposures*probabilityOfInfection;
 	}
 	
 	private List<DataPoint> ISRModelAlgorithm(GraphType typeOfGraph)
@@ -105,6 +112,8 @@ public class ForecastAlgorithm {
 		List<DataPoint> ICUDP = new ArrayList<DataPoint>();
 		List<DataPoint> deceasedDP = new ArrayList<DataPoint>();
 		List<DataPoint> recoveredDP = new ArrayList<DataPoint>();
+		
+		resetValues();
 		
 		//Calculate the Effective Reproductive Number using the Population Info Form
 		//calculateEffectiveReproductiveNumber();
@@ -116,7 +125,7 @@ public class ForecastAlgorithm {
         //Maximum Value the function can take (max y value)
         //int maxScore = 100;
        
-        DataPoint infectedRate = new DataPoint(0,0);
+        DataPoint infectionRate = new DataPoint(0,0);
         DataPoint infected = new DataPoint(0,infectious);
         DataPoint icu = new DataPoint(0,0);
         DataPoint deceased = new DataPoint(0,0);
@@ -129,7 +138,7 @@ public class ForecastAlgorithm {
     	//temp.y = (Math.sin(0.2*i/3.14)) * 100;
     	//infectedDP.add(new DataPoint(temp));
 
-    	infectionRateDP.add(new DataPoint(infectedRate));
+    	infectionRateDP.add(new DataPoint(infectionRate));
     	infectedDP.add(new DataPoint(infected));
     	ICUDP.add(new DataPoint(icu));
     	deceasedDP.add(new DataPoint(deceased));
@@ -137,58 +146,56 @@ public class ForecastAlgorithm {
     	
     	calculateEffectiveReproductiveNumber();
     	
-    	int infectedToday;
-    	int recoveredToday;
-    	int deceasedToday;
-    	int icuToday;
+
         
         //This where the data points are added
         for (int i = 1; i < maxDataPoints; i++) 
         {
-        	infectedRate.x = infected.x = icu.x = deceased.x = recovered.x = i;
+        	double newInfected = 0;
+        	double newRecovered = 0;
+        	double newDeceased = 0;
+        	double newICU = 0;
+        	
+        	infectionRate.x = infected.x = icu.x = deceased.x = recovered.x = i;
 
         	//effectiveReproductiveNumber = 1.2; //max = 3.8, min = less than one
         	
-        	//Infections increase exponentially until herd immunity achieved which is 75% of the population infected
-        	if(infected.y <= totalPopulation*0.75){
-        		if(i%14 == 0) {
-        			infectedToday = (int) (infected.y*effectiveReproductiveNumber);
-        			infected.y += infectedToday;
-        			susceptible = susceptible - (int)infectedToday;
-        			//infectious = infected.y;
-        		}
-        		else {
-        			infectedToday = 1000;
-        			infected.y += infectedToday;
-        			susceptible = susceptible - (int)infectedToday;
-        		}
-        			
-        	}
-        	else
-        		infectedToday = 0;
+        	//Infections increase exponentially until herd immunity achieved which is about 75% of the population infected
+        	newInfected = infected.y*effectiveReproductiveNumber*(susceptible*normalizationFactor/totalPopulation*normalizationFactor);
+        	infected.y += (int) newInfected;
+        	infectious += newInfected;
+        	susceptible -= newInfected;
+    		
         	
-        	
-        	if (i > 14 ) {
-        		//30% chance of recovery in icu
-        		deceasedToday = (int) (icu.y*0.70);
-        		deceased.y += deceasedToday; 
+        	//Some amount begin recover from the virus after about 20 days
+        	if(i > 20)
+        	{
+        		//Out of the infected about 5% will need hospitalization in the ICU
+        		newICU = infected.y*0.05;
+        		icu.y += newICU;
         		
-        		//Some amount recovers
-        		recoveredToday = (int) (infected.y*recoveryPercentagePerDay);
-        		if(recovered.y + recoveredToday <= totalPopulation*0.90)
-        			recovered.y += recoveredToday;
+        		//Out of those hospitalized in the ICU about 20% will die
+        		newDeceased = icu.y*0.2;
+        		deceased.y += newDeceased;
+        		icu.y -= newDeceased;
+        		removed += newDeceased;
         		
-        		//5% critical condition
-        		icuToday = (int) (infected.y*0.05 - deceasedToday);
-            	icu.y += icuToday;
-            	
-            	infected.y -= (int) (icuToday + deceasedToday + recoveredToday);
-            	
-            	//Is calculated by dividing the amount of infected today by tests per day
-            	infectedRate.y = infectedToday/infoForm.getTestingPerDay();
+        		
+        		//Some amount recovers from the disease
+	        	newRecovered = infected.y*recoveryPercentage;
+	        	newRecovered += icu.y*0.1;
+	        	icu.y -= icu.y*0.1;
+	    		recovered.y += newRecovered;
+	    		infected.y -= newRecovered;
+	    		infectious -= newRecovered;
+	    		removed += newRecovered;
         	}
+
   
-        	infectionRateDP.add(new DataPoint(infectedRate));
+        	//Infection Rate graph calculating what percentage of the tests are likely to be positive
+        	infectionRate.y = (700.0*infectious/totalPopulation);
+        	
+        	infectionRateDP.add(new DataPoint(infectionRate));
         	infectedDP.add(new DataPoint(infected));
         	ICUDP.add(new DataPoint(icu));
         	deceasedDP.add(new DataPoint(deceased));
