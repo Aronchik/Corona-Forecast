@@ -42,6 +42,10 @@ public class RecoveredGraph extends Graph {
 	//Methods
 	public void showRecoveredGraph() {}
 	
+    String getYLabel(int i) {
+    	return (long)(((long) ((getMinY() + (getMaxY() - getMinY()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100.0) + "";
+    }
+	
     //This is where the points frames and panels are created
 	public static void createAndShowGui() {
     	

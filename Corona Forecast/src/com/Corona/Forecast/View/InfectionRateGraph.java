@@ -41,6 +41,19 @@ public class InfectionRateGraph extends Graph{
 	//Methods
 	public void showInfectionRateGraph() {}
 	
+    String getYLabel(int i) {
+    	String yLabel;
+    	double numYLabel =(double)(((double) ((getMinY() + (getMaxY() - getMinY()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100.0);
+    	
+    	if(numYLabel > 0)
+    		yLabel = numYLabel + "";
+    	else
+    		yLabel = 0 + "";
+    	
+    	yLabel = yLabel.substring(0, Math.min(yLabel.length(), 4)) + "%";
+    	return yLabel;
+    }
+	
     //This is where the points frames and panels are created
 	public static void createAndShowGui() {
     	
@@ -52,7 +65,7 @@ public class InfectionRateGraph extends Graph{
         
         //Changing resolution of window
         mainPanel.setPreferredSize(new Dimension(1500,800));
-        JFrame frame = new JFrame("Infections Per Day");
+        JFrame frame = new JFrame("Infection Rate");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(mainPanel);
         frame.pack();

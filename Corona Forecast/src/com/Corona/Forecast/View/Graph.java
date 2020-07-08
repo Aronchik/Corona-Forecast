@@ -73,7 +73,7 @@ public abstract class Graph extends JPanel {
                 g2.setColor(gridColor);
                 g2.drawLine(padding + labelPadding + 1 + pointWidth, y0, getWidth() - padding, y1);
                 g2.setColor(Color.BLACK);
-                String yLabel = (int)(((int) ((getMinY() + (getMaxY() - getMinY()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100.0) + "";
+                String yLabel = getYLabel(i);
                 FontMetrics metrics = g2.getFontMetrics();
                 int labelWidth = metrics.stringWidth(yLabel);
                 
@@ -120,7 +120,7 @@ public abstract class Graph extends JPanel {
 //        return new Dimension(width, height);
 //    }
 
-    private double getMinY() {
+    protected double getMinY() {
         double minPoint = Double.MAX_VALUE;
         for (DataPoint point : dataPoints) {
             minPoint = Math.min(minPoint, point.y);
@@ -128,8 +128,8 @@ public abstract class Graph extends JPanel {
         return minPoint;
     }
 
-    private double getMaxY() {
-        int maxPoint = Integer.MIN_VALUE;
+    protected double getMaxY() {
+        double maxPoint = Integer.MIN_VALUE;
         for (DataPoint point : dataPoints) {
             maxPoint = Math.max(maxPoint, point.y);
         }
@@ -145,6 +145,8 @@ public abstract class Graph extends JPanel {
     public List<DataPoint> getdataPoints() {
         return dataPoints;
     }
+    
+    abstract String getYLabel(int i);
     
     private static void paintGraph(Graphics2D g2, 
     		Color lineColor, int pointWidth, Color pointColor,
