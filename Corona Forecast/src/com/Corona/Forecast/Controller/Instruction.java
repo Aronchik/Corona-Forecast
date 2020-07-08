@@ -15,7 +15,7 @@ public class Instruction {
 				+ "Fill in the form with the latest information you<br>"
 				+ "have regarding the current state of the situation in your country <br>"
 				+ "Choose the information Graph you would like to view <br>"
-				+ "and click \"Finish\" to view the results.</html>";
+				+ "and click \"Run\" to view the results.</html>";
 		
 		epidemiologistInstructions = 
 				"<html>You are currently logged in as an epidemiologist. <br>"

@@ -2,7 +2,7 @@ package com.Corona.Forecast.Controller;
 
 public class DataPoint {
 	public int x; 
-	public int y; 
+	public double y; 
 	 
 	 public DataPoint()
 	 {
