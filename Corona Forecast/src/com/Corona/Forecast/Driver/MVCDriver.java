@@ -78,23 +78,6 @@ public class MVCDriver {
 				e.printStackTrace();
 			}
 		}
-		
-		try {
-		String filename = "Virus Information.txt";
-		outputStream = new ObjectOutputStream(new FileOutputStream(filename));
-		outputStream.writeDouble(3.8);
-		outputStream.writeBoolean(true);
-		outputStream.writeInt(20);
-		
-		} catch(IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				outputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
     	
     	loginScreen.main(null);
      }
