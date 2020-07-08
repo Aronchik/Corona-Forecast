@@ -1,8 +1,11 @@
 package com.Corona.Forecast.Model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
 	
 	//Attributes
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
 	
