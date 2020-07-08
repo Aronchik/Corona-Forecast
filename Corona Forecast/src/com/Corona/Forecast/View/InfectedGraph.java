@@ -19,12 +19,8 @@ import javax.swing.SwingUtilities;
 
 public class InfectedGraph extends Graph{
 	
-	//Attributes
-	//private List<Point> infectedDP;
-	
 	public InfectedGraph(List<DataPoint> dataPoints) {
 		super(dataPoints);
-		// TODO Auto-generated constructor stub
 		
 		//Red: Color(255,0,0,180)
 		lineColor = new Color(255,0,0,180);
@@ -32,7 +28,6 @@ public class InfectedGraph extends Graph{
 	
 	public InfectedGraph(DataPointProcessor dataPointController) {
 		super(dataPointController);
-		// TODO Auto-generated constructor stub
 		
 		//Red: Color(255,0,0,180)
 		lineColor = new Color(255,0,0,180);

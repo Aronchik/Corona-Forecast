@@ -19,13 +19,8 @@ import javax.swing.SwingUtilities;
 
 public class ICUGraph extends Graph{
 	
-	//Attributes
-	//private List<Point> ICUDP;
-	
-	
 	public ICUGraph(List<DataPoint> dataPoints) {
 		super(dataPoints);
-		// TODO Auto-generated constructor stub
 		
 		//Yellow: Color(255,255,0,180)
 		lineColor = new Color(255,255,0,180);
@@ -33,7 +28,6 @@ public class ICUGraph extends Graph{
 	
 	public ICUGraph(DataPointProcessor dataPointController) {
 		super(dataPointController);
-		// TODO Auto-generated constructor stub
 		
 		//Yellow: Color(255,255,0,180)
 		lineColor = new Color(255,255,0,180);

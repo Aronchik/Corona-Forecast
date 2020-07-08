@@ -28,10 +28,6 @@ public class VirusInfoUpdate extends JFrame {
 	private VirusInfoUpdateProcessor virusInfoController = new VirusInfoUpdateProcessor();
 	private Instruction epidemiologistInstructions = new Instruction();
 	
-	
-	//Attributes
-	//private List<User> validUsers;
-	
 	//Methods
 	void updateReproductiveNumber() {}
 	void updateVaccineInfo() {}

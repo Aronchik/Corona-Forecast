@@ -19,12 +19,8 @@ import javax.swing.SwingUtilities;
 
 public class DeceasedGraph extends Graph{
 	
-	//Attributes
-	//private List<Point> deceasedDP;
-	
 	public DeceasedGraph(List<DataPoint> dataPoints) {
 		super(dataPoints);
-		// TODO Auto-generated constructor stub
 		
 		//Black: Color(0,0,0,180)
 		lineColor = new Color(0,0,0,180);
@@ -32,7 +28,6 @@ public class DeceasedGraph extends Graph{
 	
 	public DeceasedGraph(DataPointProcessor dataPointController) {
 		super(dataPointController);
-		// TODO Auto-generated constructor stub
 		
 		//Black: Color(0,0,0,180)
 		lineColor = new Color(0,0,0,180);

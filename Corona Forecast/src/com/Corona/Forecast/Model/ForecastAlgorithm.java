@@ -72,7 +72,6 @@ public class ForecastAlgorithm {
 	
 	//Calculate P
 	//Goes down when people follow proper Hygiene practices
-	//Calculated according to effective reproductive number
 	private void calculateProbabilityOfInfection() {
 		
 		//Proper Hygiene among the population lowers the spread by 40%
@@ -119,28 +118,16 @@ public class ForecastAlgorithm {
 		
 		resetValues();
 		
-		//Calculate the Effective Reproductive Number using the Population Info Form
-		//calculateEffectiveReproductiveNumber();
-		
 		
         //How many data points are in the graph (max x value)
         int maxDataPoints = days;
         
-        //Maximum Value the function can take (max y value)
-        //int maxScore = 100;
        
         DataPoint infectionRate = new DataPoint(0,0);
         DataPoint infected = new DataPoint(0,infectious);
         DataPoint icu = new DataPoint(0,0);
         DataPoint deceased = new DataPoint(0,0);
         DataPoint recovered = new DataPoint(0,0);
-        
-        
-    	//temp.x = i;
-    	//(Math.sin(0.2*i/3.14)) * maxScore;
-    	//(1 + avgNoOfExposures*probabilityOfInfection)*temp.y;
-    	//temp.y = (Math.sin(0.2*i/3.14)) * 100;
-    	//infectedDP.add(new DataPoint(temp));
 
     	infectionRateDP.add(new DataPoint(infectionRate));
     	infectedDP.add(new DataPoint(infected));
@@ -148,6 +135,7 @@ public class ForecastAlgorithm {
     	deceasedDP.add(new DataPoint(deceased));
     	recoveredDP.add(new DataPoint(recovered));    
     	
+    	//Calculate the Effective Reproductive Number using the Population Info Form
     	calculateEffectiveReproductiveNumber();
     	
 
@@ -161,8 +149,6 @@ public class ForecastAlgorithm {
         	double newICU = 0;
         	
         	infectionRate.x = infected.x = icu.x = deceased.x = recovered.x = i;
-
-        	//effectiveReproductiveNumber = 1.2; //max = 3.8, min = less than one
         	
         	//Infections increase exponentially until herd immunity achieved which is about 75% of the population infected
         	newInfected = infected.y*effectiveReproductiveNumber*(susceptible*normalizationFactor/totalPopulation*normalizationFactor);
@@ -275,7 +261,5 @@ public class ForecastAlgorithm {
 		
 		return deceasedList;
 	}
-	
-	//Getters-Setters
 
 }

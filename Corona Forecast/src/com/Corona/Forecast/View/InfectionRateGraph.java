@@ -19,12 +19,8 @@ import javax.swing.SwingUtilities;
 
 public class InfectionRateGraph extends Graph{
 	
-	//Attributes
-	//private List<Point> infectionRateGraphDP;
-	
 	public InfectionRateGraph(List<DataPoint> dataPoints) {
 		super(dataPoints);
-		// TODO Auto-generated constructor stub
 		
 		//Blue: Color(0,0,255,180)
 		lineColor = new Color(0,0,255,180);
@@ -32,7 +28,6 @@ public class InfectionRateGraph extends Graph{
 	
 	public InfectionRateGraph(DataPointProcessor dataPointController) {
 		super(dataPointController);
-		// TODO Auto-generated constructor stub
 		
 		//Blue: Color(0,0,255,180)
 		lineColor = new Color(0,0,255,180);

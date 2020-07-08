@@ -20,12 +20,8 @@ import javax.swing.SwingUtilities;
 
 public class RecoveredGraph extends Graph {
 	
-	//Attributes
-	//private List<Point> recoveredDP;
-	
 	public RecoveredGraph(List<DataPoint> dataPoints) {
 		super(dataPoints);
-		// TODO Auto-generated constructor stub
 		
 		//Green: Color(0,204,0,180)
 		lineColor = new Color(0,204,0,180);
@@ -33,7 +29,6 @@ public class RecoveredGraph extends Graph {
 	
 	public RecoveredGraph(DataPointProcessor dataPointController) {
 		super(dataPointController);
-		// TODO Auto-generated constructor stub
 		
 		//Green: Color(0,204,0,180)
 		lineColor = new Color(0,204,0,180);
