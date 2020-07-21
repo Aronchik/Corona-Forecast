@@ -15,25 +15,28 @@ public class ForecastAlgorithmTest2 {
     	
     	form.setCentralLocationShudtownStatus(false);
     	form.setContactTracingStatus(false);
-    	form.setCurrentlyInfected(2);
+    	form.setTotalPopulation(8000000);
+    	form.setCurrentlyInfected(20);
     	form.setHygieneInformationCampaignStatus(false);
     	form.setIsolationStatus(false);
     	form.setTestsPerDay(10000);
-    	form.setTotalPopulation(8000000);
     	form.setTravelRestrictionsStatus(false);
     	
-    	DataPointProcessor processor = new DataPointProcessor(form,virusInfo, 100);
+    	DataPointProcessor processor = new DataPointProcessor(form,virusInfo, 180);
     	
     	InfectedGraph inf = new InfectedGraph(processor);
-    	ICUGraph icu = new ICUGraph(processor);
-    	DeceasedGraph deceased = new DeceasedGraph(processor);
-    	InfectionRateGraph infectionRate = new InfectionRateGraph(processor);
-    	RecoveredGraph recovered = new RecoveredGraph(processor);
-    	
     	inf.createAndShowGui();
-    	//icu.createAndShowGui();
-    	//deceased.createAndShowGui();
-    	//infectionRate.createAndShowGui();
-    	//recovered.createAndShowGui();
+    	
+    	ICUGraph icu = new ICUGraph(processor);
+    	icu.createAndShowGui();
+    	
+    	DeceasedGraph deceased = new DeceasedGraph(processor);
+    	deceased.createAndShowGui();
+    	
+    	InfectionRateGraph infectionRate = new InfectionRateGraph(processor);
+    	infectionRate.createAndShowGui();
+    	
+    	RecoveredGraph recovered = new RecoveredGraph(processor);
+    	recovered.createAndShowGui();
 	}
 }
